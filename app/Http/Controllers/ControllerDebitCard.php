@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\model\DebitCard;
 use App\Http\Requests;
 
 class ControllerDebitCard extends Controller
@@ -36,7 +36,20 @@ class ControllerDebitCard extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $account = DebitCard::create([
+            'ownedby' => $request['ownedby'],
+            'Account_id' => $request['account_id'],
+            'Customer_id' => $request['Customer_id'],
+            'Bank_id' => $request['bank'],
+            'balance' => $request['balance'],
+            'cardno' => $request['numTarjeta'],
+            
+            
+        ]);
+
+        $account->save();
+
+        return back()->with('flash', 'Tarjeta asignada a la cuenta!!');
     }
 
     /**
@@ -82,5 +95,12 @@ class ControllerDebitCard extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function viewInfo($id){
+        $cardInfo = DebitCard::where('Account_id', $id)->get();
+
+
+        return view('customer.viewInfo' ,compact('cardInfo'));
     }
 }

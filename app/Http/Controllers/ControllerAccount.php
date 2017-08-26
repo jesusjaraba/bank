@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+Use App\model\Account;
 use App\Http\Requests;
 
 class ControllerAccount extends Controller
@@ -36,7 +36,18 @@ class ControllerAccount extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $account = Account::create([
+            'type' => $request['type'],
+            'owner' => $request['owner'],
+            'Customer_id' => $request['Customer_id'],
+            'accountBalance' => $request['balance'],
+            
+            
+        ]);
+
+        $account->save();
+
+        return back();
     }
 
     /**
